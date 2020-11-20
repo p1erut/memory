@@ -4,6 +4,8 @@ const cards = [...document.querySelectorAll('.element')];
 let clickCounter = 0;
 let activeCards = [];
 
+let startTime = 0;
+
 const cardClick = function(){    
     ++clickCounter;
     console.log(clickCounter);
@@ -43,8 +45,9 @@ const cardClick = function(){
         });        
     }
     setTimeout(function(){
+        const endTime = new Date().getTime()
         if([...document.querySelectorAll('.white')].length == 18){
-            alert("Koniec gry");
+            alert(`Koniec gry. \nTwój czas: ${(endTime - startTime) / 1000} sekund`);
         };
     },501);
 }
@@ -60,6 +63,7 @@ const init = () => {
             card.classList.add('covered');
             card.addEventListener('click',cardClick);
         });
+        startTime = new Date().getTime();
     },1000); 
 }
 

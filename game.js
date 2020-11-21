@@ -7,29 +7,26 @@ let activeCards = [];
 let startTime = 0;
 
 const cardClick = function(){    
-    ++clickCounter;
-    console.log(clickCounter);
+    ++clickCounter;    
     activeCards.push(this);
     this.removeEventListener('click',cardClick);
     this.classList.remove(this.classList[2]);
-    if(clickCounter == 2){
+    console.log(activeCards.length);
+    if(clickCounter === 2){
         cards.forEach(function(card){
-            card.removeEventListener('click',cardClick);
+            card.removeEventListener('click', cardClick);
         });
-        console.log('wykryto dwa kliknięcia');
         if(activeCards[0].classList[1] === activeCards[1].classList[1]){
-            setTimeout(function(){
-                console.log('Trafione!');
-                clickCounter = 0;
+            setTimeout(function(){ 
+                clickCounter = 0;                               
                 activeCards.forEach(function(activeCard){
                     activeCard.classList.add('white');
                 });
-                activeCards = [];
+                activeCards = [];               
             },500);            
         }
         else {
             setTimeout(function(){
-                console.log('nietrafione xd');
                 clickCounter = 0;
                 activeCards.forEach(function(activeCard){
                     activeCard.classList.add('covered');
@@ -38,16 +35,18 @@ const cardClick = function(){
                 activeCards = [];
             },500)         
         }
-        cards.forEach(function(card){
-            if(!card.classList.contains('white')){
-                card.addEventListener('click',cardClick);
-            }
-        });        
+        setTimeout(function(){
+            cards.forEach(function(card){
+                if(!card.classList.contains('white')){
+                    card.addEventListener('click',cardClick);
+                }
+            });
+        },501);       
     }
     setTimeout(function(){
         const endTime = new Date().getTime()
         if([...document.querySelectorAll('.white')].length == 18){
-            alert(`Koniec gry. \nTwój czas: ${(endTime - startTime) / 1000} sekund`);
+            alert(`Koniec gry. \nTwój czas: ${(endTime - startTime) / 1000} s`);
         };
     },501);
 }
